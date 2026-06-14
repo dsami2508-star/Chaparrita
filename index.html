@@ -218,25 +218,84 @@ document.getElementById("mensaje").innerHTML=mensajes[i];
 },2500);
 
 document.getElementById("si").onclick=()=>{
-document.getElementById("musica").play();
 
-document.body.innerHTML=`
+const musica = document.getElementById("musica");
 
-<div class="final">
+// Inicia la música
+musica.volume = 0.8;
+musica.play();
 
-<h1>❤️Chaparrita❤️</h1>
+// Explosión de corazones
+for(let i=0;i<100;i++){
 
-<p>Sabía que dirías que sí ✨</p>
+const heart=document.createElement("div");
 
-<p>Gracias por cada sonrisa.</p>
+heart.innerHTML="❤️";
+heart.style.position="fixed";
+heart.style.left="50%";
+heart.style.top="50%";
+heart.style.fontSize=(Math.random()*25+15)+"px";
 
-<p>Gracias por existir.</p>
+const angle=Math.random()*Math.PI*2;
+const distance=Math.random()*400+100;
 
-<p>Te quiero muchísimo 💕</p>
+heart.animate([
+{
+transform:"translate(0,0)",
+opacity:1
+},
+{
+transform:`translate(${Math.cos(angle)*distance}px,${Math.sin(angle)*distance}px)`,
+opacity:0
+}
+],{
+duration:2000
+});
 
-</div>
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},2000);
+
+}
+
+// Mostrar mensaje final sin borrar el audio
+setTimeout(()=>{
+
+document.querySelector(".container").innerHTML=`
+
+<h1 style="
+font-size:4rem;
+color:#ff2d75;
+text-shadow:
+0 0 10px #ff2d75,
+0 0 20px #ff2d75,
+0 0 40px #ff2d75,
+0 0 80px #ff2d75;
+">
+❤️ Chaparrita ❤️
+</h1>
+
+<p style="font-size:1.8rem;margin-top:20px;">
+Sabía que dirías que sí ✨
+</p>
+
+<p style="font-size:1.4rem;margin-top:15px;">
+Gracias por cada sonrisa 💕
+</p>
+
+<p style="font-size:1.4rem;margin-top:15px;">
+Gracias por existir 🌹
+</p>
+
+<p style="font-size:1.6rem;margin-top:20px;">
+Te quiero muchísimo ❤️
+</p>
 
 `;
+
+},1800);
 
 };
 
